@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
-
+from employees.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("taskassign.urls")),
     path('employees/' , include('employees.urls')),
+    path('login/', user_login, name = 'user_login'),
+    path('logout/', user_logout, name = 'user_logout'),
+    path('profile/', MyProfile.as_view(), name = 'my_profile'),
 ]

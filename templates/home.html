@@ -1,37 +1,5 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>
-        <h3 align="center">List of {{title}}</h3>
-        <a class="btn btn-success float-right" href="{%url 'task_add' %}"> Add Task</a>
-    </p>
-
-    <div class="table-responsive-lg">
-        {% if task %}
-            <table class="table table-bordered">
-                <thead class="thead-light" align="center">
-                    <tr>
-                        <th>Tasks</th>
-                        <th> Actions </th>
-                    </tr>
-                </thead>
-                <tbody align="center">
-                {% for tasks in task %}
-                    <tr>
-                        <th scope="row">
-                            <a class="list-group-item" href="#" >{{tasks.title }} </a>
-                        </th>
-                        <td class="text-center">
-                            <a class="btn btn-primary" href="{%url 'task_detail' tasks.id %}">Details</a>
-                            <a class="btn btn-secondary" href="#">Assign</a>
-
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                </table>
-        {% else %}
-            <p>There is no Tasks available.</p>
-        {% endif %}
-    </div>
+<h1> Task management</h1>
 {% endblock content %}

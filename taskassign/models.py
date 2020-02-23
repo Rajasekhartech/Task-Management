@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from employees.models import Profile
 
 # Create your models here.
 
@@ -16,3 +17,11 @@ class tasks(models.Model):
         return self.title
 
 
+class dept_assign_task(models.Model):
+    user = models.ForeignKey(User,null=False, blank=False, on_delete=models.CASCADE)
+    task = models.ForeignKey(tasks, null= False, blank= False, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(null = False, blank = False)
+    status_choice= (("in_process" , "in_process"), ("compleated", "compleated"))
+    status = models.CharField(max_length= 10, choices=status_choice)
+    def __str__(self):
+        return self.task.title

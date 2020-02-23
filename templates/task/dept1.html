@@ -2,34 +2,28 @@
 {% block content %}
 <div class="row">
         <div class="col-sm-8">
-
         <p>
-            {% if request.user.profile.designation == 'Admin' %}
             <div class="float-left"><h3>List of {{title}}</h3></div>
-            <a class="btn btn-success float-right" href="{% url 'employee_add' %}"> Add Employee</a>
-            {% endif %}
+            <div class="text-right">
+            <a href="#" class="btn btn-success">Assign</a>
+            </div>
+
         </p>
 
-
     <div class="table-responsive-sm">
-    {% if users %}
+    {% if dept_users %}
             <table class="table table-bordered">
                 <thead class="thead-light">
                     <tr>
                         <th>Name</th>
-                        <th class="text-center">Actions</th>
+
                     </tr>
                 </thead>
                 <tbody>
-            {% for user in users %}
+            {% for user in dept_users %}
                     <tr>
                         <td scope="row">
-                            {{user.username}}
-                            <span class="badge badge-default">{{user.profile.designation}}</span>
-                        </td>
-                        <td class="text-center">
-                            <a class="btn btn-primary" href="{% url 'employee_details' user.id %}">Details</a>
-                            <a class="btn btn-danger" href="{% url 'employee_delete' user.id %}">Delete</a>
+                            <label><input type="checkbox"> {{user}}</label>
 
                         </td>
                     </tr>
