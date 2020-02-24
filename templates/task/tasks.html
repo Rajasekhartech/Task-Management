@@ -7,8 +7,8 @@
         <a class="btn btn-success float-right" href="{%url 'task_add' %}"> Add Task</a>
         {% endif %}
     </p>
-
-
+{% if request.user.profile.designation == "Admin" %}
+<!--Admin interface -->
     <div class="table-responsive-lg">
         {% if task %}
             <table class="table table-bordered">
@@ -19,21 +19,13 @@
                     </tr>
                 </thead>
                 <tbody align="center">
-                {% for tasks in task %}
+                {% for tsk in task %}
                     <tr>
                         <th scope="row">
-                            <a class="list-group-item" href="#" >{{tasks.title }} </a>
+                            <a class="list-group-item" href="#" >{{tsk.title }} </a>
                         </th>
                         <td class="text-center">
-                            <a class="btn btn-primary" href="{%url 'task_detail' tasks.id %}">Details</a>
-                            {% if request.user.profile.designation == "Admin"%}
-                            <a class="btn btn-success" href="{% url 'dept1' tasks.id %}">Assign</a>
-                            {% else %}
-                            <a class="btn btn-success" href="#">Start</a>
-                            <a class="btn btn-warning" href="#">Stop</a>
-                            <a class="btn btn-danger" href="#">End</a>
-                            {% endif %}
-
+                            <a class="btn btn-primary" href="{%url 'task_detail' tsk.id %}">Details</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -43,4 +35,37 @@
             <p>There is no Tasks available.</p>
         {% endif %}
     </div>
+{% endif %}
+
+<!--User interface -->
+{% if request.user.profile.designation != "Admin" %}
+<div class="table-responsive-lg">
+        {% if task %}
+            <table class="table table-bordered">
+                <thead class="thead-light" align="center">
+                    <tr>
+                        <th>Tasks</th>
+                        <th> Actions </th>
+                    </tr>
+                </thead>
+                <tbody align="center">
+
+                        {% for i in assign %}
+                        <tr>
+                                <th scope="row">
+                                    <a class="list-group-item" href="#" >{{i}} </a>
+                                </th>
+                            <td class="text-center">
+                            <a class="btn btn-danger" href="{% url 'task_progress' i.task_id %}">End</a>
+                                <a class="btn btn-danger" >{{i.status}}</a>
+                        </td>
+                        {% endfor %}
+                        </tr>
+                </tbody>
+                </table>
+        {% else %}
+            <p>There is no Tasks available.</p>
+        {% endif %}
+    </div>
+{% endif %}
 {% endblock content %}

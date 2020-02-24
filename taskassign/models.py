@@ -7,7 +7,7 @@ from employees.models import Profile
 class tasks(models.Model):
     title = models.TextField(null=False, blank=False)
     description = models.TextField(null= True, blank = True)
-    status = models.CharField(default='inactive', max_length=10)
+    status = models.CharField(default='inactive', max_length=20)
     created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
@@ -18,10 +18,10 @@ class tasks(models.Model):
 
 
 class dept_assign_task(models.Model):
-    user = models.ForeignKey(User,null=False, blank=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile,null=False, blank=False, on_delete=models.CASCADE)
     task = models.ForeignKey(tasks, null= False, blank= False, on_delete=models.CASCADE)
-    start_date = models.DateTimeField(null = False, blank = False)
-    status_choice= (("in_process" , "in_process"), ("compleated", "compleated"))
-    status = models.CharField(max_length= 10, choices=status_choice)
+    start_date = models.DateTimeField(auto_now=True)
+    status_choice= (("in_process_dept1" , "in_process_dept1"), ("compleated_dept1", "compleated_dept1"),("in_process_dept2" , "in_process_dept2"), ("compleated_dept2", "compleated_dept2") )
+    status = models.CharField(max_length= 20, choices=status_choice)
     def __str__(self):
         return self.task.title

@@ -1,5 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1> Task management</h1>
+<p>
+        <h3 align="center">List of Tasks</h3>
+</p>
+
+<div class="table-responsive-lg">
+        {% if task %}
+            <table class="table table">
+                <thead class="thead-light" align="center">
+                    <tr>
+                        <th>Tasks</th>
+                        <th>Department</th>
+                        <th> Status</th>
+                        <th> User</th>
+
+                    </tr>
+                </thead>
+                <tbody align="center">
+                {% for tasks in task %}
+                    <tr>
+                        <th scope="column">
+                            <p class="list-group-item">{{tasks }} </p>
+                        </th>
+                        {% for users in user%}
+                        {% if tasks.user_id == users.id %}
+                        <td class="text-center">
+                            <p class="list-group-item">{{users.profile.department}}</p>
+
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        {% for i in status %}
+                            {% if tasks.task_id == i.id %}
+                                <td class="text-center">
+                                    <p class="list-group-item">{{i.status}} </p>
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                        {% for users in user%}
+                        {% if tasks.user_id == users.id %}
+                        <td class="text-center">
+                            <p class="list-group-item">{{users.username}}</p>
+
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+        {% else %}
+            <p>There is no Tasks available.</p>
+        {% endif %}
+    </div>
 {% endblock content %}

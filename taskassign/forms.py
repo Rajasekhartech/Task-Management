@@ -13,7 +13,7 @@ class TaskForm(forms.ModelForm):
         fields = ['title','description']
 
 class task_asign_dept1(forms.ModelForm):
-    task = forms.ModelChoiceField(queryset= tasks.objects.all())
+    task = forms.ModelChoiceField(queryset= tasks.objects.all().filter(status = 'inactive'))
     user = forms.ModelChoiceField(queryset=Profile.objects.all().filter(department = 'dept1'))
 
 

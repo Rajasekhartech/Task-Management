@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+        <div class="col-sm-8">
+        <p>
+            <div class="float-left"><h3>List of {{title}}</h3></div>
+
+        </p>
+
+    <div class="table-responsive-sm">
+
+        <table class="table table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th></th>
+
+            </tr>
+            </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">
+                            <label><a href="{%url 'assign_task' %}">Department 1</a> </label>
+
+                        </td>
+
+                    </tr>
+                    <td>
+                        <label><a href="#"> Department 2</a> </label>
+                    </td>
+                </tbody>
+            </table>
+
+
+
+    </div>
+</div>
+{% endblock content %}
