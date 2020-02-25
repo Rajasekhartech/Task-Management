@@ -57,7 +57,7 @@ def user_login(request):
             login(request, user)
             if request.GET.get('next', None):
                 return HttpResponseRedirect(request.GET['next'])
-            return HttpResponseRedirect(reverse('home_page'))
+            return HttpResponseRedirect(reverse('task_page'))
 
 
 

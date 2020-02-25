@@ -21,7 +21,7 @@ class dept_assign_task(models.Model):
     user = models.ForeignKey(Profile,null=False, blank=False, on_delete=models.CASCADE)
     task = models.ForeignKey(tasks, null= False, blank= False, on_delete=models.CASCADE)
     start_date = models.DateTimeField(auto_now=True)
-    status_choice= (("in_process_dept1" , "in_process_dept1"), ("compleated_dept1", "compleated_dept1"),("in_process_dept2" , "in_process_dept2"), ("compleated_dept2", "compleated_dept2") )
-    status = models.CharField(max_length= 20, choices=status_choice)
+    status = models.CharField(default='inactive', max_length=20)
+
     def __str__(self):
         return self.task.title

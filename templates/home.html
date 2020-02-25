@@ -11,43 +11,44 @@
                 <thead class="thead-light" align="center">
                     <tr>
                         <th>Tasks</th>
-                        <th>Department</th>
                         <th> Status</th>
+
+                        <th>Department</th>
                         <th> User</th>
 
                     </tr>
                 </thead>
                 <tbody align="center">
                 {% for tasks in task %}
-                    <tr>
+                <tr>
+
                         <th scope="column">
                             <p class="list-group-item">{{tasks }} </p>
                         </th>
-                        {% for users in user%}
-                        {% if tasks.user_id == users.id %}
-                        <td class="text-center">
-                            <p class="list-group-item">{{users.profile.department}}</p>
+                        <th scope="coloumn">
+                            <p class="list-group-item">{{tasks.status }}</p>
+                        </th>
 
-                        </td>
-                        {% endif %}
-                        {% endfor %}
-                        {% for i in status %}
-                            {% if tasks.task_id == i.id %}
-                                <td class="text-center">
-                                    <p class="list-group-item">{{i.status}} </p>
-                                </td>
-                            {% endif %}
-                        {% endfor %}
-                        {% for users in user%}
-                        {% if tasks.user_id == users.id %}
-                        <td class="text-center">
-                            <p class="list-group-item">{{users.username}}</p>
+                    {% for user in a %}
 
-                        </td>
-                        {% endif %}
-                        {% endfor %}
-                    </tr>
+                    {% if tasks.user_id == user.id %}
+                    <th scope="column">
+                    <p > {{user.profile.department}}</p>
+                    </th>
+                    <th scope="column">
+                        <p>{{user.username}}</p>
+                    </th>
+
+                    {% endif %}
+                     </th>
+
+
+                    {% endfor %}
+
+
+                </tr>
                 {% endfor %}
+
                 </tbody>
                 </table>
         {% else %}
