@@ -10,7 +10,7 @@ from employees.models import Profile
 
 # Create your views here.
 def home(request):
-    return render(request,"auth/login.html")
+    return render(request,"base_home.html")
 
 @login_required
 def dashboard(request):
@@ -20,12 +20,11 @@ def dashboard(request):
          users = User.objects.all()
          context['task'] = task
          context['a'] = users
-         print('asdfgasdfasdf aaaaaaaaaa',context['a'])
-
          return render(request, 'home.html', context)
      else:
          return render(request,"task/tasks.html")
 
+@login_required()
 def task_page(request):
     if request.user.profile.designation == "Admin":
         context ={}
@@ -39,7 +38,6 @@ def task_page(request):
         a = Q(status__contains="in_process_dept1")
         b = Q(status__contains="in_process_dept2")
         c = Q(user_id__contains = request.user.id)
-        #task = tasks.objects.filter(status = a)
         if request.user.profile.department == "dept1":
             assign = dept_assign_task.objects.filter((a))
         elif request.user.profile.department =="dept2":
@@ -50,7 +48,7 @@ def task_page(request):
         return render(request,"task/tasks.html", context)
 
 
-
+@login_required()
 def task_detail(request, id = None):
     context = {}
     try:
@@ -77,21 +75,6 @@ class TaskView(View):
         context = {"task_form" : task_form}
         return render(request, 'task/new_task.html', context)
 
-# def dept1(request, id = None):
-#    if request.method == "GET":
-#        context = {}
-#        try:
-#            task = tasks.objects.get(id=id)
-#        except:
-#            raise Http404
-#        context['task'] = task
-#        dept_users = Profile.objects.all().filter(department = 'dept1')
-#        context['dept_users'] = dept_users
-#        context['title'] = "Employees in department 1"
-#        return render(request,'task/dept1.html', context)
-#    elif request.method=="POST":
-#        context = {}
-#        return render(request,'task/tasks.html', context)
 
 class assign_task(View):
     def get(self,request):
@@ -136,45 +119,40 @@ class assign_task_dept2(View):
             status = tasks.objects.get(pk=new_task.task_id)
             status.status = "in_process_dept2"
             status.save()
-            print(status.status)
-            dept_assign_task.objects.filter(task_id=new_task.id).update(status="in_process_dept2")
-            # assign = dept_assign_task.objects.get(task_id=new_task.task_id)
-            # assign.status = "in_process_dept2"
-            # print(assign)
-            # assign.save()
-            # print(status.status)
-            # print(assign.status)
-            print(new_task.task_id)
+            user = User.objects.all()
+            for users in user:
+                if new_task.user_id == users.id:
+                    print(users.id)
+                    dept_assign_task.objects.filter(user_id=new_task.user_id).update(status="in_process_dept2")
+                else:
+                    pass
             return HttpResponseRedirect("/task")
         context = {"task_form": task_form}
         return render(request, 'task/new_task.html', context)
 
 
-
+@login_required()
 def department(request):
     context = {}
     context['title'] = "depatments"
     return render(request, "task/departments.html", context)
 
-
+@login_required()
 def task_progress(request ,id = None):
-    context = {}
-
     try:
         task = tasks.objects.get(id = id)
-        assign = dept_assign_task.objects.get(task_id= task.id)
-        print(assign)
         if request.user.profile.department == "dept1":
             tasks.objects.filter(pk=task.id).update(status='compleated_dept1')
-        else:
+        elif request.user.profile.department == "dept2":
             tasks.objects.filter(pk=task.id).update(status='compleated_dept2')
-        if (assign.user_id == request.user.id):
-            if request.user.profile.department == "dept1":
-                dept_assign_task.objects.filter(task_id=task.id).update(status='compleated_dept1')
-            else:
-                dept_assign_task.objects.filter(task_id=task.id).update(status='compleated_dept2')
+
+        if request.user.profile.department == "dept1":
+            dept_assign_task.objects.filter(user_id=request.user.id).update(status='compleated_dept1')
+        else:
+            dept_assign_task.objects.filter(user_id=request.user.id).update(status='compleated_dept2')
     except:
         raise Http404
+
     return HttpResponseRedirect("/task")
 
 

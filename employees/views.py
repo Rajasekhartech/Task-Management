@@ -6,18 +6,21 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import UserForm
 # Create your views here.
-
+from django.contrib.auth.decorators import login_required
+@login_required()
 def employee_list(request):
     context = {}
     context['users'] = User.objects.all()
     context['title'] = 'Employees'
     return render(request, 'employees/index.html',context)
 
+@login_required()
 def employee_details(request, id=None):
      context = {}
      context['user'] = get_object_or_404(User, id = id)
      return render(request,'employees/details.html',context)
 
+@login_required()
 def employee_add(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -32,6 +35,7 @@ def employee_add(request):
         form = UserForm()
         return render(request, 'employees/add.html', {'form': form})
 
+@login_required()
 def employee_delete(request , id = None):
     user = get_object_or_404(User, id = id)
     if request.method == "POST":
@@ -41,6 +45,7 @@ def employee_delete(request , id = None):
         context={}
         context['user'] = user
         return render(request, 'employees/delete.html', context)
+
 
 class MyProfile(DetailView):
     template_name = 'profile.html'
@@ -67,6 +72,7 @@ def user_login(request):
     else:
         return render(request, "auth/login.html", context)
 
+@login_required()
 def user_logout(request):
     if request.method=="POST":
         logout(request)

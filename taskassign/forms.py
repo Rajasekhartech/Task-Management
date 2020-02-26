@@ -15,8 +15,8 @@ class TaskForm(forms.ModelForm):
 
 class task_asign_dept1(forms.ModelForm):
     a = Q(status__contains = "inactive")
-    b = Q(status__contains = "in_process_dept1")
-    task = forms.ModelChoiceField(queryset= tasks.objects.filter(a|b))
+#    b = Q(status__contains = "in_process_dept1")
+    task = forms.ModelChoiceField(queryset= tasks.objects.filter(a))
     user = forms.ModelChoiceField(queryset=Profile.objects.all().filter(department = 'dept1'))
 
 
@@ -26,8 +26,8 @@ class task_asign_dept1(forms.ModelForm):
 
 class task_asign_dept2(forms.ModelForm):
     a = Q(status__contains = "compleated_dept1")
-    b = Q(status__contains = "in_process_dept2")
-    task = forms.ModelChoiceField(queryset= tasks.objects.filter(a|b))
+#    b = Q(status__contains = "in_process_dept2")
+    task = forms.ModelChoiceField(queryset= tasks.objects.filter(a))
     user = forms.ModelChoiceField(queryset=Profile.objects.all().filter(department = 'dept2'))
 
 

@@ -55,13 +55,15 @@
 
                         {% for i in assign %}
                         <tr>
+                            {% if request.user.id == i.user_id %}
                                 <th scope="row">
                                     <a class="list-group-item" href="#" >{{i}} </a>
                                 </th>
                             <td class="text-center">
-                            <a class="btn btn-danger" href="{% url 'task_progress' i.task_id %}">End</a>
-                                <a class="btn btn-danger" >{{i.status}}</a>
+                            <a class="btn btn-success" href="{% url 'task_progress' i.task_id %}">Compleated</a>
+                                <a class="btn btn-danger" >{{i.user_id}}</a>
                         </td>
+                            {% endif %}
                         {% endfor %}
                         </tr>
                 </tbody>

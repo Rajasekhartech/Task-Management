@@ -25,18 +25,20 @@
                         <th scope="column">
                             <p class="list-group-item">{{tasks }} </p>
                         </th>
+
                         <th scope="coloumn">
                             <p class="list-group-item">{{tasks.status }}</p>
                         </th>
+
 
                     {% for user in a %}
 
                     {% if tasks.user_id == user.id %}
                     <th scope="column">
-                    <p > {{user.profile.department}}</p>
+                    <p class="list-group-item" > {{user.profile.department}}</p>
                     </th>
                     <th scope="column">
-                        <p>{{user.username}}</p>
+                        <p class="list-group-item">{{user.username}}_{{user.profile.department}}</p>
                     </th>
 
                     {% endif %}

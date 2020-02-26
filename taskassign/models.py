@@ -21,7 +21,7 @@ class dept_assign_task(models.Model):
     user = models.ForeignKey(Profile,null=False, blank=False, on_delete=models.CASCADE)
     task = models.ForeignKey(tasks, null= False, blank= False, on_delete=models.CASCADE)
     start_date = models.DateTimeField(auto_now=True)
-    status = models.CharField(default='inactive', max_length=20)
+    status = models.CharField( max_length=20)
 
     def __str__(self):
         return self.task.title
